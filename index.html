@@ -1,13 +1,202 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Agencia de turismo</title>
+
+    <!--Bootstrap-->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+
+    <link rel="stylesheet" href="https://necolas.github.io/normalize.css/8.0.0/normalize.css">
+    <link href="https://fonts.googleapis.com/css?family=Lato:400,700,900" rel="stylesheet">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Josefin+Sans:wght@100;300;500&family=Lobster+Two:ital@1&family=Open+Sans&family=PT+Sans:ital,wght@0,400;1,700&family=Raleway:wght@200;500;700&family=Staatliches&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="fontawesome-all.min.css">
+
+    <link rel="preload" href="../style.css/" as="style">
+    <link rel="stylesheet" href="../style.css">
+
+    <!-- Iconos-->
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.4/css/all.css"
+        integrity="sha384-DyZ88mC6Up2uqS4h/KRgHuoeGwBcD4Ng9SiP4dIRy0EXTlnuz47vAwmeGwVChigm" crossorigin="anonymous">
 </head>
+
 <body>
-    <h1>Bienvenido a su agencia de turismo!</h1>
-    <script src = "Entrega.js"> </script>
+    <!--Navegación superior-->
+    <div class="contenedor_superior">
+        <div class="navegación_derecha">
+
+            <!--Enlaces-->
+            <header class="contenedor_enlaces">
+                <div class="enlaces">
+                    <nav>
+                        <a href="#">Vender</a>
+                        <a href="#">Ayuda</a>
+                        <a href="#">Registro</a>
+                </div>
+
+                <!--Buscador ordenar..-->
+                <div>
+                    <ul>
+                        <select class="form-select form-select-sm" aria-label=".form-select-sm example">
+                            <option selected>Ordenar por:</option>
+                            <option value="1">Mayor a menor</option>
+                            <option value="2">Menor a mayor</option>
+                            <option value="3">Alfabéticamente</option>
+                        </select>
+                    </ul>
+                </div>
+
+                <!--Carrito-->
+                </nav>
+                <div class="conteiner">
+
+                    <ul>
+                        <li class="ordenarPor">
+                            <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+                            <path d="M6 19m-2 0a2 2 0 1 0 4 0a2 2 0 1 0 -4 0"></path>
+                            <path d="M17 19m-2 0a2 2 0 1 0 4 0a2 2 0 1 0 -4 0"></path>
+                            <path d="M17 17h-11v-14h-2"></path>
+                            <path d="M6 5l14 1l-1 7h-13"></path>
+                    </ul>
+
+                    <!--Modal Carrito-->
+                    <ul style="list-style: none;" className="navbar-nav me-auto">
+                        <li className="nav-item ">
+                            <a id="botonCarrito" data-bs-toggle="modal" data-bs-target="#idModalCarrito"
+                                class="btn btn-secondary"><i class="fas fa-shopping-cart fa-1x"></i></a>
+                        </li>
+                    </ul>
+                    <div class="modal fade" id="idModalCarrito" tabindex="-1" aria-labelledby="exampleModalLabel"
+                        aria-hidden="true">
+                        <div class="modal-dialog">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title" id="exampleModalLabel">Carrito de Compras</h5>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                        aria-label="Close"></button>
+                                </div>
+                                <div class="modal-body" id="modal-bodyCarrito">
+                                </div>
+                                <div class="row ml-ato">
+                                    <p id="precioTotal"></p>
+                                </div>
+                                <div class="modal-footer">
+
+                                    <button type="button" class="btn btn-secondary"
+                                        data-bs-dismiss="modal">Cerrar</button>
+                                    <button type="button" data-bs-dismiss="modal" class="btn btn-success"
+                                        id="botonFinalizarCompra">Finalizar Compra</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </header>
+        </div>
+
+        <!--Buscador central-->
+        <div class="contenedor_buscador central">
+            <h1>Encuentra <span>tus actividades</span> para tus próximas vacaciones</h1>
+            <form action="/buscador" method="POST" class="formulario formulario-buscar" id="formulario">
+                <input id="buscador" type="text" name="busqueda" class="busqueda"
+                    placeholder="Casa Battló, Park Guell, Sagrada Familia ..">
+                <input type="submit" value="Buscar" id="btn-submit">
+
+            </form>
+        </div>
+    </div>
+
+
+    <!--Dark Mode-->
+    <div class="container m-4">
+        <div class="row">
+            <div class="col-3">
+                <button id="botonDrakMode" class="btn btn-dark">Dark</button>
+            </div>
+            <div class="col-3">
+                <button id="botonLightMode" class="btn btn-light">Light</button>
+            </div>
+            <div class="col-3">
+                <button id="eliminarMode" class="btn btn-light">Eliminar preferencia</button>
+            </div>
+            <div class="col-2">
+                <button id="toggleMode" class="btn btn-dark">Dark</button>
+            </div>
+        </div>
+    </div>
+
+    <!--Ver/ocultar cátalogo-->
+    <div class="contenedor_catalogo">
+        <div class="row">
+            <div class="col-3">
+                <button id="verActividades" class="btn btn-outline-secondary">Ver actividades</button>
+            </div>
+            <div class="col-3">
+                <button id="ocultarActividades" class="btn btn-outline-secondary">Ocultar actividades</button>
+            </div>
+        </div>
+    </div>
+
+    <!--Modal agregar actividad-->
+    <div class="col-3">
+        <button id="agregarAct" data-bs-toggle="modal" data-bs-target="#idModalAgregarAct"
+            class="btn btn-outline-secondary">Agregar actividad</button>
+    </div>
+
+    <div class="modal fade" id="idModalAgregarAct" tabindex="-1" aria-labelledby="exampleModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Agregar actividad</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body" id="modal-body">
+                    <form id="formAgregarAct">
+                        <div class="mb-3">
+                            <label for="titulo" class="form-label">Actividad</label>
+                            <input type="text" class="form-control" id="actividadInput" aria-describedby="actividad">
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="costo" class="form-label">Costo</label>
+                            <input type="text" class="form-control" id="costoInput" aria-describedby="costo">
+                        </div>
+                    </form>
+                </div>
+
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+                    <button type="text" id="guardarActBtn" class="btn btn-success" data-bs-dismiss="modal">Guardar actividad</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <!--Div Card-->
+    <div>
+        <h3 class="parte_inferior"> Lista de actividades</h3>
+
+        <div class="container">
+            <div id="actividades" class="row"></div>
+        </div>
+
+        <!--Script Bootstrap-->
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+            integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
+            crossorigin="anonymous"></script>
+    </div>
+    <!--Script-->
+    <script src="Entrega.js"> </script>
+    <script src="darkToggle.js"></script>
+
 </body>
+
 </html>
