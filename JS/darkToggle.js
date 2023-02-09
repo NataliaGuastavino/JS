@@ -1,4 +1,4 @@
-// Dark mode:
+// Dark Toggle:
 let btnToggle = document.getElementById ("toggleMode")
 
 if (localStorage.getItem ("modoOscuro")){
