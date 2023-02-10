@@ -5,6 +5,7 @@ class Actividad{
         this.nombreActividad = nombreActividad,
         this.costo = costo,
         this.imagen = imagen
+       // this.cantidad = 1
     }
 }
 
@@ -22,12 +23,18 @@ let listaActividades = []
 //1. Condicional que evalúe si hay algo cargado:
 if (localStorage.getItem(listaActividades)){
     // Si existe algo en el storage entra al if.
-    listaActividades = JSON.parse(localStorage.getItem ("listaActividades"))
+    // listaActividades = JSON.parse(localStorage.getItem ("listaActividades"))
+    // Vuelvo a instanciar con la class
+    for (let actividad of JSON.parse(localStorage.getItem ("listaActividades"))) {
+        let storageActividad = new Actividad (actividad.id, actividad.nombreActividad, actividad.costo, actividad.imagen)
+        console.log (storageActividad)
+        listaActividades.push (storageActividad)
+    }
 } else {
     // Si no existe entra al else
     listaActividades.push (campNou, casaBattlo, casaMila, Tibidado, parkGuell, sagradaFamilia)
-    localStorage.setItem("listaActividades", JSON.stringify (listaActividades))
+    localStorage.setItem("listaActividades", JSON.stringify(listaActividades))
 }
-console.log (listaActividades)
+//console.log (listaActividades)
 
 

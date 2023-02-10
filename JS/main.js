@@ -1,16 +1,14 @@
-// Proyecto con DOM
-
-// Capturo 
+// Capturo los elementos necesarios para el JS 
 let actividadesDiv = document.getElementById ("actividades")
-//let verActividadesBtn = document.getElementById ("verActividades")
-//let ocultarActividadesBtn = document.getElementById ("ocultarActividades")
 let guardarActBtn = document.getElementById ("guardarActBtn")
 let inputBuscador = document.querySelector ("#buscador")
 let coincidencia = document.getElementById ("coincidencia")
 let selectOrden = document.getElementById ("selectOrden")
 let modalBodyCarrito = document.getElementById ("modal-bodyCarrito")
 let botonCarrito = document.getElementById ("botonCarrito")
+let precioTotal =document.getElementById ("precioTotal")
 
+// Array productos en carrito:
 let actividadesEnCarrito 
 if (localStorage.getItem ("carrito")){
     actividadesEnCarrito = JSON.parse(localStorage.getItem ("carrito"))
@@ -19,7 +17,8 @@ if (localStorage.getItem ("carrito")){
     localStorage.setItem("carrito", actividadesEnCarrito)
 }
 
-// FUNCTIONS - DOM
+// FUNCTIONS:
+
 // Creo la función:
 function mostrarActividades (array) {
 
@@ -29,55 +28,54 @@ actividadesDiv.innerHTML =""
 // Imprimo los objetos en el DOM:
 for (let actividad of array) {
 
-    // Código para imprimir el array de actividades
-    // Creo un div padre de la card
-    let nuevaActividadDiv = document.createElement ("div")
-    nuevaActividadDiv.className = "col-12 col-md-6 col-lg-4 my-3"
+// Código para imprimir el array de actividades
+// Creo un div padre de la card
+let nuevaActividadDiv = document.createElement ("div")
+nuevaActividadDiv.className = "col-12 col-md-6 col-lg-4 my-3"
 
-    // Le sumo html:
-    nuevaActividadDiv.innerHTML = `
+// Le sumo html:
+nuevaActividadDiv.innerHTML = `
     <div id= ${actividad.id} class="card" style="width: 18rem;">
-        <img src="img/${actividad.imagen}" class="card-img-top img-fluid" style="height: 200px"  alt="${actividad.nombreActividad} ">
+        <img src="img/${actividad.imagen}" class="card-img-top img-fluid" style="height: 200px"  alt="${actividad.nombreActividad}">
         <div class="card-body">
             <h4 class="card-title">${actividad.nombreActividad}</h4>
             <p class="card-price"> Costo: ${actividad.costo}€ </p>
             <a href="#" id="agregarBtn ${actividad.id}" class="btn btn-outline-primary">Agregar al carrito</a>
         </div>
     </div> `
+
     actividadesDiv.appendChild (nuevaActividadDiv)
+
     let agregarBtn = document.getElementById (`agregarBtn ${actividad.id}`)
     agregarBtn.onclick = ()=> {
 
-        agregarAlCarrito (actividad)
+    agregarAlCarrito (actividad)
         } 
     }
 }
 
-function cargarProductosCarrito (array){
-    modalBodyCarrito.innerHTML = ""
-    array.forEach ((productoCarrito) =>{
-        modalBodyCarrito.innerHTML += `
-    <div id= ${productoCarrito.id} class="card" style="width: 18rem;">
-        <img src="img/${productoCarrito.imagen}" class="card-img-top img-fluid" style="height: 200px"  alt="${productoCarrito.nombreActividad} ">
-        <div class="card-body">
-            <h4 class="card-title">${productoCarrito.nombreActividad}</h4>
-            <p class="card-price"> Costo: ${productoCarrito.costo}€ </p>
-            <a href="#" id="agregarBtn ${productoCarrito.id}" class="btn btn-outline-primary">Agregar al carrito</a>
-        </div>
-    </div> `
-    })
+// Creo una función para agregar nuevas actividades:
+function cargarActividad (array){
+    let actividadInput = document.getElementById ("actividadInput")
+    let costoInput = document.getElementById ("costoInput")
+
+// Function constructora:
+const nuevaActividad = new Actividad (array.length+1, actividadInput.value, parseInt(costoInput.value), "nuevaBcn.jpg")
+
+// Agrego el nuevo producto al array de productos:
+array.push (nuevaActividad)
+    
+// Guardar en storage:
+localStorage.setItem ("listaActividades", JSON.stringify (array))
+    mostrarActividades (array)
+
+let formAgregarAct = document.getElementById ("formAgregarAct")
+
+formAgregarAct.reset ()
 }
 
-function agregarAlCarrito (actividad) {
-    console.log (`La actividad ${actividad.nombreActividad} de costo ${actividad.costo}€ ha sido agregada exitosamente al carrito`)
-    // Lo sumo a actividadesEnCarrito
-    actividadesEnCarrito.push (actividad)
-    // Lo seteo en el storage
-    localStorage.setItem ("carrito", JSON.stringify(actividadesEnCarrito))
-}
 
-mostrarActividades (listaActividades)
-
+// Function: búsqueda
 function buscarInfo (buscado, array){
     
     let busquedaArray = array.filter(
@@ -128,35 +126,53 @@ function ordenarAlfabeticamente (array){
     })
     console.log (mostrarActividades (ordenAlfa))
 }
+mostrarActividades (listaActividades)
+
+// Function para agregar actividades al carrito:
+function agregarAlCarrito (actividad) {
+    // Evalúo si el producto existe en el carrito:
+    let actividadAgregada = actividadesEnCarrito.find ((elem)=> elem.id == actividad.id)
+    if (actividadAgregada == undefined){
+        console.log (`La actividad ${actividad.nombreActividad} de costo ${actividad.costo}€ ha sido agregada exitosamente al carrito`)
+        // Lo sumo a actividadesEnCarrito
+        actividadesEnCarrito.push (actividad)
+        // Lo seteo en el storage
+        localStorage.setItem ("carrito", JSON.stringify(actividadesEnCarrito))
+    }else {
+        // El producto se encuenta en el carrito:
+        console.log (`La actividad ${actividad.nombreActividad} ya se encuentra en el carrito`)
+    }
+}
+
+// Function: agregar nuevos productos
+function cargarProductosCarrito (array){
+    modalBodyCarrito.innerHTML = ""
+    array.forEach ((productoCarrito) =>{
+        modalBodyCarrito.innerHTML += `
+    <div id= ${productoCarrito.id} class="card" style="width: 18rem;">
+        <img src="img/${productoCarrito.imagen}" class="card-img-top img-fluid" style="height: 200px"  alt="${productoCarrito.nombreActividad}">
+        <div class="card-body">
+            <h4 class="card-title">${productoCarrito.nombreActividad}</h4>
+            <p class="card-price"> Costo: ${productoCarrito.costo}€ </p>
+            <a href="#" id="agregarBtn ${productoCarrito.id}" class="btn btn-outline-primary">Agregar al carrito</a>
+        </div>
+    </div> `
+    })
+    compraTotal (array)
+}
+
+// Function: calcular compra total
+function compraTotal (array){
+    let acumulador = 0
+    for (let activity of array){
+        acumulador = acumulador + activity.costo
+    }
+    precioTotal.innerHTML = `El precio es ${acumulador}€`
+    return acumulador
+}
 
 // EVENTOS:
-//verActividadesBtn.onclick = function () {
-//   mostrarActividades (listaActividades)
-//}
-//ocultarActividadesBtn.addEventListener ("dblclick", ()=> {
- //   actividadesDiv.innerHTML = ""
-//})
-
-// Creo una función para agregar nuevas actividades:
-function cargarActividad (array){
-    let actividadInput = document.getElementById ("actividadInput")
-    let costoInput = document.getElementById ("costoInput")
-
-    // Function constructora:
-    const nuevaActividad = new Actividad (array.length+1, actividadInput.value, parseInt(costoInput.value), "nuevaBcn.jpg")
-    console.log (nuevaActividad)
-    // Agrego el nuevo producto al array de productos:
-    array.push (nuevaActividad)
-    // Guardar en storage:
-    localStorage.setItem ("listaActividades", JSON.stringify (array))
-    mostrarActividades (array)
-
-    let formAgregarAct = document.getElementById ("formAgregarAct")
-
-    formAgregarAct.reset ()
-    }
-
-    guardarActBtn.addEventListener ("click", ()=>{
+guardarActBtn.addEventListener ("click", ()=>{
         cargarActividad (listaActividades)
     })
 
@@ -165,7 +181,7 @@ inputBuscador.addEventListener ("input", ()=>{
     buscarInfo(inputBuscador.value, listaActividades)
 })
 
-// Select para ordenar:
+// Evento para ordenar productos:
 selectOrden.addEventListener ("change", ()=> {
     selectOrden.value
     if (selectOrden.value == "1"){
