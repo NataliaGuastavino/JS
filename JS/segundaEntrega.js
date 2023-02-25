@@ -230,3 +230,81 @@ do {
     while (salirMenu) 
 }
 menu ()
+
+// TERCERA ENTREGA:
+// Function: búsqueda
+function buscarInfo (buscado, array){
+    
+    let busquedaArray = array.filter(
+        (actividad)=> actividad.nombreActividad.toLowerCase().includes(buscado.toLowerCase())
+    )
+    if(busquedaArray.length == 0){
+        coincidencia.innerHTML = `<h3>No se encuentran coincidencias con su búsqueda</h3>`
+        mostrarActividades (busquedaArray)
+    }else{
+        coincidencia.innerHTML = ""
+        mostrarActividades (busquedaArray)
+    }
+}
+
+// Array productos en carrito:
+let actividadesEnCarrito 
+if (localStorage.getItem ("carrito")){
+    actividadesEnCarrito = JSON.parse(localStorage.getItem ("carrito"))
+}else {
+    actividadesEnCarrito = []
+    localStorage.setItem("carrito", actividadesEnCarrito)
+}
+
+// Function: agregar nuevos productos
+function cargarProductosCarrito (array){
+    modalBodyCarrito.innerHTML = ""
+    array.forEach ((productoCarrito) =>{
+        modalBodyCarrito.innerHTML += `
+    <div id= ${productoCarrito.id} class="card" style="width: 18rem;">
+        <img src="img/${productoCarrito.imagen}" class="card-img-top img-fluid" style="height: 200px"  alt="${productoCarrito.nombreActividad}">
+        <div class="card-body">
+            <h4 class="card-title">${productoCarrito.nombreActividad}</h4>
+            <p class="card-price"> Costo: ${productoCarrito.costo}€ </p>
+            <a href="#" id="agregarBtn ${productoCarrito.id}" class="btn btn-outline-primary">Agregar al carrito</a>
+        </div>
+    </div> `
+    })
+    compraTotal (array)
+}
+
+// Function: calcular compra total
+function compraTotal (array){
+    let acumulador = 0
+    for (let activity of array){
+        acumulador = acumulador + activity.costo
+    }
+    precioTotal.innerHTML = `El precio es ${acumulador}€`
+    }
+
+    // Instanciación de los primeros objetos de productos:
+const campNou = new Actividad (1, "Camp Nou", 70, "campNou.jpg" )
+const casaBattlo = new Actividad (2, "Casa Battló", 60, "casaBattlo.jpg")
+casaMila = new Actividad (3, "Casa Milá", 40, "casaMila.jpg")
+Tibidabo = new Actividad (4, "Tibidabo", 50, "tibidabo.jpg")
+const parkGuell = new Actividad (5, "Park Guell", 30, "parkGuell.jpg")
+const sagradaFamilia = new Actividad (6, "Sagrada Familia", 90, "sagradaFamilia.jpg")
+
+
+// Creo el array de actividades y pusheo los objetos ya existentes:
+let listaActividades = []
+//1. Condicional que evalúe si hay algo cargado:
+if (localStorage.getItem(listaActividades)){
+    // Si existe algo en el storage entra al if.
+    // listaActividades = JSON.parse(localStorage.getItem ("listaActividades"))
+    // Vuelvo a instanciar con la class
+    for (let actividad of JSON.parse(localStorage.getItem ("listaActividades"))) {
+        let storageActividad = new Actividad (actividad.id, actividad.nombreActividad, actividad.costo, actividad.imagen)
+        console.log (storageActividad)
+        listaActividades.push (storageActividad)
+    }
+} else {
+    // Si no existe entra al else
+    listaActividades.push (campNou, casaBattlo, casaMila, Tibidado, parkGuell, sagradaFamilia)
+    localStorage.setItem("listaActividades", JSON.stringify(listaActividades))
+}

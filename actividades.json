@@ -1,0 +1,39 @@
+[
+    {
+        "id": 1,
+        "nombreActividad": "Camp Nou",
+        "costo": 70,
+        "imagen": "campNou.jpg"
+    },
+    {
+        "id": 2,
+        "nombreActividad": "Casa Battló",
+        "costo": 60,
+        "imagen": "casaBattlo.jpg"
+    },
+    {
+        "id": 3,
+        "nombreActividad": "Casa Milá",
+        "costo": 40,
+        "imagen": "casaMila.jpg"
+    },
+    {
+        "id": 4,
+        "nombreActividad": "Tibidabo",
+        "costo": 50,
+        "imagen": "tibidabo.jpg"
+    },
+    {
+        "id": 5,
+        "nombreActividad": "Park Guell",
+        "costo": 30,
+        "imagen": "parkGuell.jpg"
+    },
+    {
+        "id": 6,
+        "nombreActividad": "Sagrada Familia",
+        "costo": 90,
+        "imagen": "sagradaFamilia.jpg"
+    }
+]
+
