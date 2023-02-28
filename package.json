@@ -1,0 +1,16 @@
+{
+  "name": "actividades",
+  "version": "1.0.0",
+  "description": "Proyecto de venta de actividades realizado en JS",
+  "main": "main.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Natalia Guastavino",
+  "license": "ISC",
+  "dependencies": {
+    "bootstrap": "^5.2.3",
+    "luxon": "^3.2.1",
+    "sweetalert2": "^11.7.3"
+  }
+}

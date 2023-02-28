@@ -308,3 +308,17 @@ if (localStorage.getItem(listaActividades)){
     listaActividades.push (campNou, casaBattlo, casaMila, Tibidado, parkGuell, sagradaFamilia)
     localStorage.setItem("listaActividades", JSON.stringify(listaActividades))
 }
+
+// Luxon:
+const DateTime = luxon.DateTime
+const fechaHoy = DateTime.now()
+let fecha = document.getElementById("fecha")
+let fechaMostrar = fechaHoy.toLocaleString(DateTime.DATE_MED_WITH_WEEKDAY)
+fecha.innerHTML = `${fechaMostrar}`
+
+//SPREAD con objetos: Para agregarle parametros a un objeto ya existente
+let superLibro4 = {
+libro4,
+cantPag: 875,
+editorial: "Sudamericana"
+}

@@ -21,9 +21,11 @@ class Actividad{
 // Creo el array de actividades y pusheo los objetos ya existentes:
 let listaActividades = []
 
+// Uso la función asincrónica y trabajo con el localStorage
 const cargarActividades = async () => {
     const response = await fetch ("actividades.json")
     const data = await response.json ()
+    // Instancio las actividades
     for (let actividad of data){
         let actividadNueva = new Actividad (actividad.id, actividad.nombreActividad, actividad.costo, actividad.imagen)
         listaActividades.push (actividadNueva)
@@ -33,8 +35,6 @@ const cargarActividades = async () => {
 
 // Creo un condicional que evalúe si hay algo cargado:
 if (localStorage.getItem(listaActividades)){
-    // Si existe algo en el storage entra al if.
-    // listaActividades = JSON.parse(localStorage.getItem ("listaActividades"))
     // Vuelvo a instanciar con la class
     for (let actividad of JSON.parse(localStorage.getItem ("listaActividades"))) {
         let storageActividad = new Actividad (actividad.id, actividad.nombreActividad, actividad.costo, actividad.imagen)

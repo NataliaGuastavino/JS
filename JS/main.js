@@ -54,8 +54,8 @@ nuevaActividadDiv.className = "col-12 col-md-6 col-lg-4 my-3"
 
 // Le sumo html:
 nuevaActividadDiv.innerHTML = `
-    <div id= "${actividad.id}" class="card" style="width: 18rem;">
-        <img src="img/${actividad.imagen}" class="card-img-top img-fluid" style="height: 200px"  alt="${actividad.nombreActividad}">
+    <div id= "${actividad.id}" class="card" style="width: 25rem;">
+        <img src="img/${actividad.imagen}" class="card-img-top img-fluid" style="height: 300px"  alt="${actividad.nombreActividad}">
         <div class="card-body">
             <h4 class="card-title">${actividad.nombreActividad}</h4>
             <p class="card-price"> Costo: ${actividad.costo}€ </p>
@@ -75,6 +75,7 @@ nuevaActividadDiv.innerHTML = `
 
 // Creo una función para agregar nuevas actividades:
 function cargarActividad (array){
+    debugger
     let actividadInput = document.getElementById ("actividadInput")
     let costoInput = document.getElementById ("costoInput")
 
@@ -84,7 +85,7 @@ const nuevaActividad = new Actividad (array.length+1, actividadInput.value, pars
 // Agrego el nuevo producto al array de productos:
 array.push (nuevaActividad)
     
-// Guardar en storage:
+// Guardo en el storage:
 localStorage.setItem ("listaActividades", JSON.stringify (array))
     mostrarActividades (array)
 
@@ -94,12 +95,12 @@ formAgregarAct.reset ()
 
 //Agrego toastify:
 Toastify ({
-    text: `La actividad ${nuevaActividad.actividad} ha sido agregada al stock`,
+    text: `La actividad ${nuevaActividad.nombreActividad} ha sido agregada al stock`,
     duration: 2500,
     gravity: `right`,
     style: {
-        background: "linear-gradient (to right, #00b09b, #96c93d) ",
-        color: "black"
+        background: "linear-gradient (to right, #4D5940) ",
+        color: "white"
     },
     onClick: function (){}
     }).showToast ();
@@ -169,7 +170,7 @@ function agregarAlCarrito (actividad) {
             text: `La actividad ${actividad.nombreActividad} ha sido agregada al carrito`,
             icon: "info",
             confirmButtonText: "Muchas gracias!",
-            confirmButtonColor: "orange",
+            confirmButtonColor: "#4D5940",
             timer: 3000, 
             imageUrl: `img/${actividad.imagen}`,
             imageHeight: 200
@@ -189,7 +190,7 @@ function agregarAlCarrito (actividad) {
     }
 }
 
-// Function: agregar nuevos productos
+// Function: agregar nuevas actividades
 function cargarProductosCarrito (array){
     modalBodyCarrito.innerHTML = ""
     array.forEach ((productoCarrito) =>{
@@ -272,16 +273,16 @@ function finalizarCompra (array){
         showCancelButton: true,
         confirmButtonText: 'Sí, seguro',
         cancelButtonText: 'No, no quiero',
-        confirmButtonColor: 'geren',
-        cancelButtonColor: 'red',
+        confirmButtonColor: '#4D5940',
+        cancelButtonColor: '',
     }).then ((result)=>{
         if (result.isConfirmed){
             let totalFinalizar = compraTotal (array)
         Swal.fire({
             title: 'Compra realizada',
             icon: 'success',
-            confirmButtonColor: 'green',
-            text: `Muchas gracias por su compra! Usted ha adquirido nuestras actividades por un total de ${totalFinalizar}`,
+            confirmButtonColor: '#4D5940',
+            text: `Muchas gracias por su compra! Usted ha adquirido nuestras actividades por un total de ${totalFinalizar}€`,
             })
             // Reseteo el carrito para que vuelva a 0
             actividadesEnCarrito = []
@@ -290,8 +291,8 @@ function finalizarCompra (array){
             Swal.fire({
                 title: 'Compra no realizada',
                 icon: 'info',
-                text: `La compra no ha sido realizada! Atención sus productos siguen en el carrito.`,
-                confirmButtonColor: 'green',
+                text: `La compra no ha sido realizada! Sus productos continuan en el carrito.`,
+                confirmButtonColor: '#4D5940',
                 timer:3500
             })
         }
@@ -299,6 +300,7 @@ function finalizarCompra (array){
 }
 
 // EVENTOS:
+
 guardarActBtn.addEventListener ("click", ()=>{
         cargarActividad (listaActividades)
     })
@@ -337,11 +339,6 @@ setTimeout (()=>{
     mostrarActividades (listaActividades)
 },1000)
 
-setInterval (()=>{
-    let horaActual = DateTime.now().toLocalString(DateTime.TIME_24_WITH_SECONDS)
-    hora.innerHTML = `${horaActual}`
-},1000)
-
 // -------------------------------------------------------------------------------------------------------------------------------
 // Setear un objeto o un array de objetos
 // objeto json. Para setear stringify. Para que no me quede un objeto plano, sino que aparezcan los datos
@@ -362,20 +359,9 @@ let {nombreActividad, costo} = sagradaFamilia
 console.log (nombreActividad)
 console.log (costo)
 
-//SPREAD con objetos: Para agregarle parametros a un objeto ya existente
-//let superLibro4 = {
-  //  libro4,
-    //cantPag: 875,
-    //editorial: "Sudamericana"
-//}
-//console.log (superLibro4)
 
 //Luxon:
-const DateTime = luxon.DateTime
-const fechaHoy = DateTime.now()
-let fecha = document.getElementById("fecha")
-let fechaMostrar = fechaHoy.toLocaleString(DateTime.DATE_MED_WITH_WEEKDAY)
-fecha.innerHTML = `${fechaMostrar}`
+
 
 function cargaActividades (resultado){
     return new Promise ((res, rej)=>{
